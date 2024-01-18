@@ -8,14 +8,15 @@ import loadingBarFragmentShader from './Shaders/Preloader/LoadingBar/fragment.gl
 export default class Preloader {
     constructor() {
         this.experience = new Experience();
-        this.scene = this.experience.scene;
         this.resources = this.experience.resources;
+        this.scene = this.experience.scene;
         this.time = this.experience.time;
+        this.animationOccur = false;
 
         this.setOverlay();
         this.setLoadingBar();
 
-        // Resources event
+        // resource event
         this.resources.on('ready', () => {
             this.onLoad();
         });
@@ -23,45 +24,77 @@ export default class Preloader {
         this.resources.on('load', () => {
             this.onProgress();
         });
+
+        setTimeout(() => {
+            this.resources.startLoading();
+        }, 3000);
     }
 
     setOverlay() {
-        const overlayGeo = new THREE.PlaneGeometry(2, 2, 1, 1);
-        const overlayMat = new THREE.ShaderMaterial({
+        this.overlay = {};
+        this.overlay.geo = new THREE.PlaneGeometry(2, 2, 1, 1);
+        this.overlay.mat = new THREE.ShaderMaterial({
             vertexShader: overlayVertexShader,
             fragmentShader: overlayFragmentShader,
+            transparent: true,
             uniforms: {
                 uAlpha: { value: 1 },
             },
         });
 
-        this.overlay = new THREE.Mesh(overlayGeo, overlayMat);
-        this.scene.add(this.overlay);
+        this.overlay.mesh = new THREE.Mesh(this.overlay.geo, this.overlay.mat);
+        this.scene.add(this.overlay.mesh);
     }
 
     setLoadingBar() {
-        const loadingBarGeo = new THREE.PlaneGeometry(2, 0.01, 1, 1);
-        const loadingBarMat = new THREE.ShaderMaterial({
+        this.loadingBar = {};
+        this.loadingBar.geo = new THREE.PlaneGeometry(2, 0.01, 1, 1);
+        this.loadingBar.mat = new THREE.ShaderMaterial({
             vertexShader: loadingBarVertexShader,
             fragmentShader: loadingBarFragmentShader,
             uniforms: {
-                uToload: { value: this.resources.toLoad },
+                uToload: { value: 0 },
                 uLoaded: { value: 0 },
+                uOffset: { value: 0 },
             },
         });
 
-        this.loadingBar = new THREE.Mesh(loadingBarGeo, loadingBarMat);
+        this.loadingBar.mesh = new THREE.Mesh(this.loadingBar.geo, this.loadingBar.mat);
 
-        this.scene.add(this.loadingBar);
+        this.scene.add(this.loadingBar.mesh);
     }
 
     onProgress() {
-        this.loadingBar.material.uniforms.uLoaded.value = this.resources.loaded;
+        this.loadingBar.mat.uniforms.uLoaded.value = this.resources.loaded;
+        this.loadingBar.mat.uniforms.uToload.value = this.resources.toLoad;
     }
 
     onLoad() {
-        this.overlay.material.uniforms.uAlpha.value = 0;
-        this.destroy();
+        this.animStartTime = this.time.elapsed;
+        this.animationOccur = true;
+    }
+
+    fadeOutOverlay() {
+        let alpha = 1.1 - (this.time.elapsed - this.animStartTime) / 1000;
+        if (alpha < 0) {
+            alpha = 0;
+            this.animationOccur = false;
+        }
+
+        this.overlay.mat.uniforms.uAlpha.value = alpha;
+    }
+
+    loadingBarOut(speed) {
+        let offset = ((this.time.elapsed - this.animStartTime) / 1000) * speed;
+
+        this.loadingBar.mat.uniforms.uOffset.value = offset;
+    }
+
+    update() {
+        if (this.animationOccur) {
+            this.fadeOutOverlay();
+            this.loadingBarOut(4);
+        }
     }
 
     destroy() {
@@ -69,8 +102,8 @@ export default class Preloader {
         this.overlay.geometry.dispose();
         this.overlay.parent.remove(this.overlay);
 
-        this.loadingBar.material.dispose();
-        this.loadingBar.geometry.dispose();
-        this.loadingBar.parent.remove(this.loadingBar);
+        this.loadingBar.mesh.material.dispose();
+        this.loadingBar.mesh.geometry.dispose();
+        this.loadingBar.mesh.parent.remove(this.loadingBar.mesh);
     }
 }

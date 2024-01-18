@@ -51,5 +51,6 @@ export default class Experience {
     update() {
         this.renderer.update();
         this.world.update();
+        this.preloader.update();
     }
 }
