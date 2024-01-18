@@ -5,10 +5,10 @@ export default class World {
     constructor() {
         this.experience = new Experience();
         this.scene = this.experience.scene;
-        this.resource = this.experience.resource;
+        this.resources = this.experience.resources;
 
         // wait for resource
-        this.resource.on('ready', () => {
+        this.resources.on('ready', () => {
             this.keyboard = new Keyboard();
         });
     }

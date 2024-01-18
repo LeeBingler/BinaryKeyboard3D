@@ -1,6 +1,7 @@
 import * as THREE from 'three';
 import EventEmitter from './EventEmitter';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+import Experience from '../Experience';
 
 export default class Resources extends EventEmitter {
     constructor(sources) {
@@ -13,6 +14,7 @@ export default class Resources extends EventEmitter {
         this.items = {};
         this.toLoad = this.sources.length;
         this.loaded = 0;
+        this.preloader = new Experience().preloader;
 
         this.setLoaders();
         this.startLoading();
@@ -20,7 +22,6 @@ export default class Resources extends EventEmitter {
 
     setLoaders() {
         this.loaders = {};
-        this.loaders.manager = new THREE.LoadingManager()
         this.loaders.gltfLoader = new GLTFLoader(this.loaders.manager);
         this.loaders.textureLoader = new THREE.TextureLoader(this.loaders.manager);
         this.loaders.cubeTextureLoader = new THREE.CubeTextureLoader(this.loaders.manager);
@@ -49,6 +50,7 @@ export default class Resources extends EventEmitter {
         this.items[source.name] = file;
 
         this.loaded++;
+        this.trigger('load');
 
         if (this.loaded === this.toLoad) {
             this.trigger('ready');

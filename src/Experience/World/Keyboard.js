@@ -5,7 +5,7 @@ export default class Keyboard {
     constructor() {
         this.experience = new Experience();
         this.scene = this.experience.scene;
-        this.resource = this.experience.resource.items.Keyboard;
+        this.resources = this.experience.resources.items.Keyboard;
         this.renderer = this.experience.renderer;
         this.time = this.experience.time;
 
@@ -14,7 +14,7 @@ export default class Keyboard {
     }
 
     setModel() {
-        this.model = this.resource.scene;
+        this.model = this.resources.scene;
         this.key0 = {
             number: this.model.children.find((child) => child.name === 'Text0'),
             key: this.model.children.find((child) => child.name === 'Touch0'),
