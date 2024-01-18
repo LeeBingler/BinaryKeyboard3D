@@ -6,6 +6,7 @@ import Sizes from './Utils/Sizes';
 import Time from './Utils/Time';
 import source from './source';
 import World from './World/World';
+import Preloader from './Preloader';
 
 let instance = null;
 
@@ -25,6 +26,7 @@ export default class Experience {
         this.sizes = new Sizes();
         this.time = new Time();
         this.scene = new THREE.Scene();
+        this.preloader = new Preloader();
         this.resource = new Resources(source);
         this.camera = new Camera();
         this.renderer = new Renderer();
