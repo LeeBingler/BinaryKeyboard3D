@@ -1,9 +1,7 @@
 import * as THREE from 'three';
 import Experience from './Experience';
-import overlayVertexShader from './Shaders/Preloader/Overlay/vertex.glsl';
-import overlayFragmentShader from './Shaders/Preloader/Overlay/fragment.glsl';
-import loadingBarVertexShader from './Shaders/Preloader/LoadingBar/vertex.glsl';
-import loadingBarFragmentShader from './Shaders/Preloader/LoadingBar/fragment.glsl';
+import overlayVertexShader from './Shaders/Preloader/vertex.glsl';
+import overlayFragmentShader from './Shaders/Preloader/fragment.glsl';
 
 export default class Preloader {
     constructor() {
@@ -18,16 +16,16 @@ export default class Preloader {
 
         // resource event
         this.resources.on('ready', () => {
-            this.onLoad();
+            setTimeout(() => {
+                this.onLoad();
+            }, 700);
         });
 
         this.resources.on('load', () => {
             this.onProgress();
         });
 
-        setTimeout(() => {
-            this.resources.startLoading();
-        }, 3000);
+        this.resources.startLoading();
     }
 
     setOverlay() {
@@ -47,29 +45,23 @@ export default class Preloader {
     }
 
     setLoadingBar() {
-        this.loadingBar = {};
-        this.loadingBar.geo = new THREE.PlaneGeometry(2, 0.01, 1, 1);
-        this.loadingBar.mat = new THREE.ShaderMaterial({
-            vertexShader: loadingBarVertexShader,
-            fragmentShader: loadingBarFragmentShader,
-            uniforms: {
-                uToload: { value: 0 },
-                uLoaded: { value: 0 },
-                uOffset: { value: 0 },
-            },
-        });
+        this.loadingBarDom = document.createElement('div');
 
-        this.loadingBar.mesh = new THREE.Mesh(this.loadingBar.geo, this.loadingBar.mat);
+        this.loadingBarDom.classList.add('loadingBar');
+        this.loadingBarDom.style.transform = 'translateX(-100%)';
 
-        this.scene.add(this.loadingBar.mesh);
+        document.body.appendChild(this.loadingBarDom);
     }
 
     onProgress() {
-        this.loadingBar.mat.uniforms.uLoaded.value = this.resources.loaded;
-        this.loadingBar.mat.uniforms.uToload.value = this.resources.toLoad;
+        const progressRatio = this.resources.loaded / this.resources.toLoad;
+        this.loadingBarDom.style.transform = `scaleX(${progressRatio})`;
     }
 
     onLoad() {
+        this.loadingBarDom.classList.add('ended');
+        this.loadingBarDom.style.transform = '';
+
         this.animStartTime = this.time.elapsed;
         this.animationOccur = true;
     }
@@ -84,16 +76,9 @@ export default class Preloader {
         this.overlay.mat.uniforms.uAlpha.value = alpha;
     }
 
-    loadingBarOut(speed) {
-        let offset = ((this.time.elapsed - this.animStartTime) / 1000) * speed;
-
-        this.loadingBar.mat.uniforms.uOffset.value = offset;
-    }
-
     update() {
         if (this.animationOccur) {
             this.fadeOutOverlay();
-            this.loadingBarOut(4);
         }
     }
 
@@ -101,9 +86,5 @@ export default class Preloader {
         this.overlay.material.dispose();
         this.overlay.geometry.dispose();
         this.overlay.parent.remove(this.overlay);
-
-        this.loadingBar.mesh.material.dispose();
-        this.loadingBar.mesh.geometry.dispose();
-        this.loadingBar.mesh.parent.remove(this.loadingBar.mesh);
     }
 }

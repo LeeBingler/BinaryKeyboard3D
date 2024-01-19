@@ -50,9 +50,7 @@ export default class Resources extends EventEmitter {
         this.trigger('load');
 
         if (this.loaded === this.toLoad) {
-            setTimeout(() => {
-                this.trigger('ready');
-            }, 2000)
+            this.trigger('ready');
         }
     }
 }

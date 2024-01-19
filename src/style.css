@@ -13,3 +13,24 @@
 
     background: black;
 }
+
+.loadingBar {
+    position: absolute;
+    top: 50%;
+    left: 0;
+
+    height: 5px;
+    width: 100vw;
+
+    transform: scaleX(0.3);
+    transform-origin: top left;
+    transition: transform .5s ease-out;
+
+    background-color: white;
+}
+
+.loadingBar.ended {
+    transform: scaleX(0);
+    transform-origin: 100% 0;
+    transition: transform .5s ease-in-out;
+}
