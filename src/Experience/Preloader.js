@@ -1,5 +1,6 @@
 import * as THREE from 'three';
 import Experience from './Experience';
+import Time from './Utils/Time';
 import overlayVertexShader from './Shaders/Preloader/vertex.glsl';
 import overlayFragmentShader from './Shaders/Preloader/fragment.glsl';
 
@@ -8,7 +9,7 @@ export default class Preloader {
         this.experience = new Experience();
         this.resources = this.experience.resources;
         this.scene = this.experience.scene;
-        this.time = this.experience.time;
+        this.time = new Time();
         this.animationOccur = false;
 
         this.setOverlay();
@@ -26,6 +27,11 @@ export default class Preloader {
         });
 
         this.resources.startLoading();
+
+        // time event
+        this.time.on('tick', () => {
+            this.update();
+        });
     }
 
     setOverlay() {
@@ -67,10 +73,12 @@ export default class Preloader {
     }
 
     fadeOutOverlay() {
-        let alpha = 1.1 - (this.time.elapsed - this.animStartTime) / 1000;
+        let alpha = 1 - (this.time.elapsed - this.animStartTime) / 1000;
         if (alpha < 0) {
             alpha = 0;
             this.animationOccur = false;
+            this.sceneLoaded = true;
+            this.destroy();
         }
 
         this.overlay.mat.uniforms.uAlpha.value = alpha;
@@ -83,8 +91,11 @@ export default class Preloader {
     }
 
     destroy() {
-        this.overlay.material.dispose();
-        this.overlay.geometry.dispose();
-        this.overlay.parent.remove(this.overlay);
+        this.time.off('tick');
+        this.loadingBarDom.remove();
+
+        this.overlay.mat.dispose();
+        this.overlay.geo.dispose();
+        this.overlay.mesh.parent.remove(this.overlay);
     }
 }
