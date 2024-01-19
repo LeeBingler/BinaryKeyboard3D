@@ -8,6 +8,7 @@ export default class Keyboard {
         this.resources = this.experience.resources.items.Keyboard;
         this.renderer = this.experience.renderer;
         this.time = this.experience.time;
+        this.rotateAnimation = false;
 
         this.setModel();
         this.setAnimation();
@@ -114,7 +115,9 @@ export default class Keyboard {
     }
 
     update() {
-        this.model.rotation.y = (this.time.elapsed / 1000) * 0.2;
+        if (this.rotateAnimation) {
+            this.model.rotation.y = (this.time.elapsed / 1000) * 0.2;
+        }
 
         // Animation condition key 0
         if (this.key0.animation === 'down' && this.targetPosY.keyPos < this.key0.key.position.y) {
