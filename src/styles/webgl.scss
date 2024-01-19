@@ -30,10 +30,10 @@
     transition: transform 0.5s ease-out;
 
     background-color: white;
+    &.ended {
+        transform: scaleX(0);
+        transform-origin: 100% 0;
+        transition: transform 0.5s ease-in-out;
+    }
 }
 
-.loadingBar.ended {
-    transform: scaleX(0);
-    transform-origin: 100% 0;
-    transition: transform 0.5s ease-in-out;
-}
