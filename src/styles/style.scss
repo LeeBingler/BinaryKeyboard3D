@@ -1,7 +1,18 @@
+@import './abstract/breakpoint';
+
 * {
     margin: 0;
     padding: 0;
     color: white;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+}
+
+#app {
+    max-width: 1500px;
 }
 
 /* HEADER */
@@ -28,9 +39,12 @@
     }
 }
 
-@media (min-width: var(--breakpoint-phone)) {
+@media (min-width: $breakpoint-tablet) {
     .header {
-        background: red;
+        .logo {
+            text-align: left;
+            margin-left: 5vh;
+        }
     }
 }
 
@@ -41,7 +55,7 @@
     flex-direction: column;
     align-items: center;
 
-    margin-top: 14vh;
+    padding-top: 14vh;
 
     .hero {
         width: 100vw;
@@ -68,6 +82,14 @@
 
     cursor: pointer;
     user-select: none;
+}
+
+@media (min-width: $breakpoint-tablet) {
+    .homepage {
+        .hero {
+            font-size: 3.2rem;
+        }
+    }
 }
 
 /* SECOND PAGE */
