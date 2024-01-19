@@ -61,4 +61,5 @@
     padding: 1rem;
 
     cursor: pointer;
+    user-select: none;
 }

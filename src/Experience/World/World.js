@@ -13,6 +13,12 @@ export default class World {
         });
     }
 
+    resize() {
+        if (this.keyboard) {
+            this.keyboard.resize();
+        }
+    }
+
     update() {
         if (this.keyboard) {
             this.keyboard.update();

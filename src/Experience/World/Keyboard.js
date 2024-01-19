@@ -38,7 +38,12 @@ export default class Keyboard {
         this.planch.material = planchMat;
 
         this.model.rotateX(Math.PI * 0.08);
-        this.model.scale.set(0.5, 0.5, 0.5);
+
+
+        // config scale to fit in screen width
+        const maxWidthWindow = window.screen.availWidth - (window.outerWidth - window.innerWidth);
+        const scale = Math.min(window.innerWidth / maxWidthWindow, 0.5);
+        this.model.scale.set(scale, scale, scale);
 
         this.scene.add(this.model);
     }
@@ -63,7 +68,7 @@ export default class Keyboard {
                 this.triggerAnimationKeyDown(this.key0);
             }
 
-            if (keydown === '1' ) {
+            if (keydown === '1') {
                 this.triggerAnimationKeyDown(this.key1);
             }
         });
@@ -99,6 +104,13 @@ export default class Keyboard {
     animationKeyDown(key) {
         key.key.position.y += (key.animStart - this.time.elapsed) / 1000;
         key.number.position.y += (key.animStart - this.time.elapsed) / 1000;
+    }
+
+    resize() {
+        const maxWidthWindow = window.screen.availWidth - (window.outerWidth - window.innerWidth);
+        const scale = Math.min(window.innerWidth / maxWidthWindow, 0.5);
+
+        this.model.scale.set(scale, scale, scale);
     }
 
     update() {
