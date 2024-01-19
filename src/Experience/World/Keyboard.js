@@ -37,7 +37,7 @@ export default class Keyboard {
 
         this.planch.material = planchMat;
 
-        this.model.rotateX(Math.PI * 0.2);
+        this.model.rotateX(Math.PI * 0.08);
         this.model.scale.set(0.5, 0.5, 0.5);
 
         this.scene.add(this.model);
