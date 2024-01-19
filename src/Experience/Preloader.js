@@ -65,9 +65,15 @@ export default class Preloader {
     }
 
     onLoad() {
+        // Animation App fade In
+        const app = document.querySelector('#app');
+        app.style.opacity = 1;
+
+        // Animation loading bar out
         this.loadingBarDom.classList.add('ended');
         this.loadingBarDom.style.transform = '';
 
+        // Animation overlay fade out
         this.animStartTime = this.time.elapsed;
         this.animationOccur = true;
     }
