@@ -20,6 +20,8 @@
 
 @media (min-width: $breakpoint-desktop) {
     .description-page {
-        font-size: 1.6rem;
+        max-width: 50%;
+        font-size: 1.5rem;
+        align-items: start;
     }
 }
