@@ -26,9 +26,22 @@ export default class Keyboard {
         };
         this.planch = this.model.children.find((child) => child.name === 'Planch');
 
-        const numberMat = new THREE.MeshBasicMaterial({ color: 0x444444 });
-        const keyMat = new THREE.MeshBasicMaterial({ color: 0xaaaaaa });
-        const planchMat = new THREE.MeshBasicMaterial({ color: 0x888888 });
+        // set material
+        let paramMaterial = {
+            metalness: 0,
+            roughness: 1,
+            /*transmission: 1,
+            thickness: 1,*/
+        };
+
+        paramMaterial.color = 0x444444;
+        const numberMat = new THREE.MeshStandardMaterial(paramMaterial);
+
+        paramMaterial.color = 0xaaaaaa;
+        const keyMat = new THREE.MeshStandardMaterial(paramMaterial);
+
+        paramMaterial.color = 0x888888;
+        const planchMat = new THREE.MeshStandardMaterial(paramMaterial);
 
         this.key0.number.material = numberMat;
         this.key1.number.material = numberMat;
@@ -39,7 +52,6 @@ export default class Keyboard {
         this.planch.material = planchMat;
 
         this.model.rotateX(Math.PI * 0.08);
-
 
         // config scale to fit in screen width
         const maxWidthWindow = window.screen.availWidth - (window.outerWidth - window.innerWidth);
