@@ -1,4 +1,6 @@
 @import './abstract/breakpoint';
+@import './pages/pages';
+@import './header.scss';
 
 * {
     margin: 0;
@@ -14,82 +16,3 @@ body {
 #app {
     max-width: 1500px;
 }
-
-/* HEADER */
-.header {
-    background: transparent;
-
-    height: 10vh;
-    width: 100vw;
-
-    position: fixed;
-    top: 0;
-
-    backdrop-filter: blur(1px);
-
-    .logo {
-        display: block;
-        width: 100%;
-
-        line-height: 10vh;
-        text-decoration: none;
-        font-size: 5vh;
-
-        text-align: center;
-    }
-}
-
-@media (min-width: $breakpoint-tablet) {
-    .header {
-        .logo {
-            text-align: left;
-            margin-left: 5vh;
-        }
-    }
-}
-
-/* HOMEPAGE */
-.homepage {
-    height: 100vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-
-    padding-top: 14vh;
-
-    .hero {
-        width: 100vw;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-
-        font-size: 3rem;
-        h1 {
-            text-align: center;
-        }
-        .slogan {
-            margin-bottom: 5vh;
-        }
-    }
-}
-
-.btn_buy {
-    font-size: 1rem;
-
-    border: 2px solid white;
-    border-radius: 10px;
-    padding: 1rem;
-
-    cursor: pointer;
-    user-select: none;
-}
-
-@media (min-width: $breakpoint-tablet) {
-    .homepage {
-        .hero {
-            font-size: 3.2rem;
-        }
-    }
-}
-
-/* SECOND PAGE */

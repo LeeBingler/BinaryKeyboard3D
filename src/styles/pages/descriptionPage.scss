@@ -1,0 +1,19 @@
+@import '../abstract/breakpoint';
+
+/* SECOND PAGE */
+.description-page {
+    width: 100%;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    row-gap: 5vh;
+
+    font-size: 1.2rem;
+
+    article {
+        width: 90%;
+    }
+}

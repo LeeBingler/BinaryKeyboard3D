@@ -1,0 +1,32 @@
+/* HEADER */
+.header {
+    background: transparent;
+
+    height: 10vh;
+    width: 100vw;
+
+    position: fixed;
+    top: 0;
+
+    backdrop-filter: blur(1px);
+
+    .logo {
+        display: block;
+        width: 100%;
+
+        line-height: 10vh;
+        text-decoration: none;
+        font-size: 5vh;
+
+        text-align: center;
+    }
+}
+
+@media (min-width: $breakpoint-tablet) {
+    .header {
+        .logo {
+            text-align: left;
+            margin-left: 5vh;
+        }
+    }
+}
