@@ -17,3 +17,9 @@
         width: 90%;
     }
 }
+
+@media (min-width: $breakpoint-desktop) {
+    .description-page {
+        font-size: 1.6rem;
+    }
+}
