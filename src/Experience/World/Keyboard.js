@@ -55,7 +55,6 @@ export default class Keyboard {
         this.scene.add(this.keyboard);
     }
 
-
     /* Animation Functions */
     setAnimation() {
         const keydownValue = 0.2;
