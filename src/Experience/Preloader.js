@@ -69,6 +69,9 @@ export default class Preloader {
         const app = document.querySelector('#app');
         app.style.opacity = 1;
 
+        // allow scrolling
+        document.body.style.overflow = 'auto';
+
         // Animation loading bar out
         this.loadingBarDom.classList.add('ended');
         this.loadingBarDom.style.transform = '';
