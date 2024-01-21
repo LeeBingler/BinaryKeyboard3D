@@ -1,9 +1,7 @@
 export default [
     {
-        name: 'Keyboard',
+        name: 'keyboardModel',
         type: 'gltfModel',
-        path: [
-            'models/keyboard.glb'
-        ]
-    }
+        path: 'models/keyboard.glb'
+    },
 ]

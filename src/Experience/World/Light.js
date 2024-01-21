@@ -27,16 +27,13 @@ export default class Light {
     }
 
     setPointLight(color = 0xffffff, intensity = 1, position = { x: 0, y: 0, z: 0 }) {
-        this.pointlight = new THREE.PointLight(color, intensity, 7);
+        this.pointlight = new THREE.PointLight(color, intensity);
 
         this.pointlight.position.x = position.x;
         this.pointlight.position.y = position.y;
         this.pointlight.position.z = position.z;
 
         this.pointlight.castShadow = true;
-
-        const helper = new THREE.PointLightHelper(this.pointlight);
-        this.scene.add(helper);
 
         this.scene.add(this.pointlight);
     }

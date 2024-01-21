@@ -5,17 +5,21 @@ export default class Keyboard {
     constructor() {
         this.experience = new Experience();
         this.scene = this.experience.scene;
-        this.resources = this.experience.resources.items.Keyboard;
+        this.resources = this.experience.resources;
         this.renderer = this.experience.renderer;
         this.time = this.experience.time;
         this.rotateAnimation = false;
 
         this.setModel();
+        this.setTexture();
+        this.setMesh();
         this.setAnimation();
     }
 
+    /* Set Functions */
+
     setModel() {
-        this.model = this.resources.scene;
+        this.model = this.resources.items.keyboardModel.scene;
         this.key0 = {
             number: this.model.children.find((child) => child.name === 'Text0'),
             key: this.model.children.find((child) => child.name === 'Touch0'),
@@ -25,42 +29,34 @@ export default class Keyboard {
             key: this.model.children.find((child) => child.name === 'Touch1'),
         };
         this.planch = this.model.children.find((child) => child.name === 'Planch');
+    }
 
-        // set material
-        let paramMaterial = {
-            metalness: 0,
-            roughness: 1,
-            /*transmission: 1,
-            thickness: 1,*/
-        };
+    setTexture() {
+        this.texture = {};
+    }
 
-        paramMaterial.color = 0x444444;
-        const numberMat = new THREE.MeshStandardMaterial(paramMaterial);
-
-        paramMaterial.color = 0xaaaaaa;
-        const keyMat = new THREE.MeshStandardMaterial(paramMaterial);
-
-        paramMaterial.color = 0x888888;
-        const planchMat = new THREE.MeshStandardMaterial(paramMaterial);
-
-        this.key0.number.material = numberMat;
-        this.key1.number.material = numberMat;
-
-        this.key0.key.material = keyMat;
-        this.key1.key.material = keyMat;
-
-        this.planch.material = planchMat;
-
-        this.model.rotateX(Math.PI * 0.08);
+    setMesh() {
+        // add all children of model to a group
+        this.keyboard = new THREE.Group();
+        const children = [...this.model.children];
+        for (const child of children) {
+            this.keyboard.add(child);
+        }
 
         // config scale to fit in screen width
         const maxWidthWindow = window.screen.availWidth - (window.outerWidth - window.innerWidth);
         const scale = Math.min(window.innerWidth / maxWidthWindow, 0.5);
-        this.model.scale.set(scale, scale, scale);
 
-        this.scene.add(this.model);
+        this.keyboard.scale.set(scale, scale, scale);
+
+        // config placement group
+        this.keyboard.rotateX(Math.PI * 0.08);
+
+        this.scene.add(this.keyboard);
     }
 
+
+    /* Animation Functions */
     setAnimation() {
         const keydownValue = 0.2;
         this.initialPosY = {
@@ -119,16 +115,23 @@ export default class Keyboard {
         key.number.position.y += (key.animStart - this.time.elapsed) / 1000;
     }
 
+    changeColorHex(color = 0xffffff, name = 'Touch0') {
+        const itemToChange = this.keyboard.children.find((child) => child.name === name);
+        itemToChange.material.color.setHex(color);
+    }
+
+    /* Utils Functions */
+
     resize() {
         const maxWidthWindow = window.screen.availWidth - (window.outerWidth - window.innerWidth);
         const scale = Math.min(window.innerWidth / maxWidthWindow, 0.5);
 
-        this.model.scale.set(scale, scale, scale);
+        this.keyboard.scale.set(scale, scale, scale);
     }
 
     update() {
         if (this.rotateAnimation) {
-            this.model.rotation.y = (this.time.elapsed / 1000) * 0.2;
+            this.keyboard.rotation.y = (this.time.elapsed / 1000) * 0.2;
         }
 
         // Animation condition key 0
