@@ -117,11 +117,6 @@ export default class Keyboard {
         keyup.sign.position.y = keyup.initialPos.sign.y;
     }
 
-    changeColorHex(color = 0xffffff, name = 'Touch0') {
-        const itemToChange = this.model.children.find((child) => child.name === name);
-        itemToChange.material.color.setHex(color);
-    }
-
     /* Utils Functions */
 
     resize() {
