@@ -19,16 +19,16 @@ export default class Keyboard {
     /* Set Functions */
 
     setModel() {
-        this.model = this.resources.items.keyboardModel.scene;
+        this.keyboard = this.resources.items.keyboardModel.scene;
         this.key0 = {
-            number: this.model.children.find((child) => child.name === '0'),
-            key: this.model.children.find((child) => child.name === 'key0'),
+            number: this.keyboard.children.find((child) => child.name === '0'),
+            key: this.keyboard.children.find((child) => child.name === 'key0'),
         };
         this.key1 = {
-            number: this.model.children.find((child) => child.name === '1'),
-            key: this.model.children.find((child) => child.name === 'key1'),
+            number: this.keyboard.children.find((child) => child.name === '1'),
+            key: this.keyboard.children.find((child) => child.name === 'key1'),
         };
-        this.planch = this.model.children.find((child) => child.name === 'Planch');
+        this.planch = this.keyboard.children.find((child) => child.name === 'Planch');
     }
 
     setTexture() {
@@ -37,22 +37,22 @@ export default class Keyboard {
 
     setMesh() {
         // add all children of model to a group
-        this.keyboard = new THREE.Group();
-        const children = [...this.model.children];
+        this.model = new THREE.Group();
+        const children = [...this.keyboard.children];
         for (const child of children) {
-            this.keyboard.add(child);
+            this.model.add(child);
         }
 
         // config scale to fit in screen width
-        const maxWidthWindow = window.screen.availWidth - (window.outerWidth - window.innerWidth);
-        const scale = 1;
+        const maxWidthWindow = window.screen.availWidth - (window.outerWidth - window.innerWidth) * 2.5;
+        const scale = Math.min(window.innerWidth / maxWidthWindow, 0.5) * 2.5;
 
-        this.keyboard.scale.set(scale, scale, scale);
+        this.model.scale.set(scale, scale, scale);
 
         // config placement group
-        this.keyboard.rotateX(Math.PI * 0.08);
+        this.model.rotateX(Math.PI * 0.1);
 
-        this.scene.add(this.keyboard);
+        this.scene.add(this.model);
     }
 
     /* Animation Functions */
@@ -115,7 +115,7 @@ export default class Keyboard {
     }
 
     changeColorHex(color = 0xffffff, name = 'Touch0') {
-        const itemToChange = this.keyboard.children.find((child) => child.name === name);
+        const itemToChange = this.model.children.find((child) => child.name === name);
         itemToChange.material.color.setHex(color);
     }
 
@@ -123,14 +123,14 @@ export default class Keyboard {
 
     resize() {
         const maxWidthWindow = window.screen.availWidth - (window.outerWidth - window.innerWidth);
-        const scale = Math.min(window.innerWidth / maxWidthWindow, 0.5);
+        const scale = Math.min(window.innerWidth / maxWidthWindow, 0.5) * 2.5;
 
-        this.keyboard.scale.set(scale, scale, scale);
+        this.model.scale.set(scale, scale, scale);
     }
 
     update() {
         if (this.rotateAnimation) {
-            this.keyboard.rotation.y = (this.time.elapsed / 1000) * 0.2;
+            this.model.rotation.y = (this.time.elapsed / 1000) * 0.2;
         }
 
         // Animation condition key 0
