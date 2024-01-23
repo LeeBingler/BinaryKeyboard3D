@@ -11,7 +11,7 @@ export default class Keyboard {
         this.rotateAnimation = false;
 
         this.setModel();
-        this.setTexture();
+        //this.setTexture();
         this.setMesh();
         this.setAnimation();
     }
@@ -24,6 +24,7 @@ export default class Keyboard {
         const modelStartWithKey = [];
         const modelNotKey = [];
 
+        // Separate key model from sign model
         for (const child of this.keyboard.children) {
             if (child.name.startsWith('key')) {
                 modelStartWithKey.push(child);
@@ -32,18 +33,29 @@ export default class Keyboard {
             }
         }
 
+        // reunit keymodel with there sign and add them to a map
         let keyModel = null;
         let notkey = null;
+        let finalObj = {};
         while (modelStartWithKey.length || modelNotKey.length) {
             notkey = modelNotKey.shift();
 
             for (let i = 0; i < modelStartWithKey.length; i++) {
                 if (modelStartWithKey[i].name.endsWith(notkey.name)) {
-                    keyModel = modelStartWithKey.splice(i, 1);
+                    keyModel = modelStartWithKey.splice(i, 1)[0];
                 }
             }
 
-            this.mapModel.set(notkey.name, { key: keyModel, sign: notkey });
+            finalObj = {
+                key: keyModel,
+                sign: notkey,
+                initialPos: {
+                    key: keyModel ? keyModel.position.clone() : null,
+                    sign: notkey ? notkey.position.clone() : null,
+                },
+            };
+
+            this.mapModel.set(notkey.name, finalObj);
 
             keyModel = null;
             notkey = null;
@@ -63,8 +75,7 @@ export default class Keyboard {
         }
 
         // config scale to fit in screen width
-        const maxWidthWindow =
-            window.screen.availWidth - (window.outerWidth - window.innerWidth) * 2.5;
+        const maxWidthWindow = window.screen.availWidth - (window.outerWidth - window.innerWidth);
         const scale = Math.min(window.innerWidth / maxWidthWindow, 0.5) * 2.5;
 
         this.model.scale.set(scale, scale, scale);
@@ -77,63 +88,33 @@ export default class Keyboard {
 
     /* Animation Functions */
     setAnimation() {
-        const keydownValue = 0.2;
-        this.initialPosY = {
-            keyPos: this.key0.key.position.y,
-            numPos: this.key0.number.position.y,
-        };
-        this.targetPosY = {
-            keyPos: this.key0.key.position.y - keydownValue,
-            numPos: this.key0.number.position.y - keydownValue,
-        };
-        this.key0.animation = 'init';
-        this.key1.animation = 'init';
-
         window.addEventListener('keydown', (e) => {
-            const keydown = e.key;
+            const keydown = this.mapModel.get(e.key);
 
-            console.log(keydown);
+            if (keydown === undefined) return;
 
-            if (keydown === '0') {
-                this.triggerAnimationKeyDown(this.key0);
-            }
-
-            if (keydown === '1') {
-                this.triggerAnimationKeyDown(this.key1);
-            }
+            this.triggerAnimationKeyDown(keydown);
         });
 
         window.addEventListener('keyup', (e) => {
-            const keyup = e.key;
+            const keyup = this.mapModel.get(e.key);
 
-            if (keyup === '0') {
-                this.triggerAnimationKeyUp(this.key0);
-            }
+            if (keyup === undefined) return;
 
-            if (keyup === '1') {
-                this.triggerAnimationKeyUp(this.key1);
-            }
+            this.triggerAnimationKeyUp(keyup);
         });
     }
 
-    triggerAnimationKeyDown(key) {
-        key.animation = 'down';
-        key.animStart = this.time.elapsed;
+    triggerAnimationKeyDown(keydown) {
+        const valueDown = 0.2;
+
+        keydown.key.position.y = keydown.initialPos.key.y - valueDown;
+        keydown.sign.position.y = keydown.initialPos.sign.y - valueDown;
     }
 
-    triggerAnimationKeyUp(key) {
-        key.animation = 'up';
-        key.animStart = this.time.elapsed;
-    }
-
-    animationKeyUp(key) {
-        key.key.position.y -= (key.animStart - this.time.elapsed) / 1000;
-        key.number.position.y -= (key.animStart - this.time.elapsed) / 1000;
-    }
-
-    animationKeyDown(key) {
-        key.key.position.y += (key.animStart - this.time.elapsed) / 1000;
-        key.number.position.y += (key.animStart - this.time.elapsed) / 1000;
+    triggerAnimationKeyUp(keyup) {
+        keyup.key.position.y = keyup.initialPos.key.y;
+        keyup.sign.position.y = keyup.initialPos.sign.y;
     }
 
     changeColorHex(color = 0xffffff, name = 'Touch0') {
@@ -153,22 +134,6 @@ export default class Keyboard {
     update() {
         if (this.rotateAnimation) {
             this.model.rotation.y = (this.time.elapsed / 1000) * 0.2;
-        }
-
-        // Animation condition key 0
-        if (this.key0.animation === 'down' && this.targetPosY.keyPos < this.key0.key.position.y) {
-            this.animationKeyDown(this.key0);
-        }
-        if (this.key0.animation === 'up' && this.initialPosY.keyPos > this.key0.key.position.y) {
-            this.animationKeyUp(this.key0);
-        }
-
-        // Animation condition key 1
-        if (this.key1.animation === 'down' && this.targetPosY.keyPos < this.key1.key.position.y) {
-            this.animationKeyDown(this.key1);
-        }
-        if (this.key1.animation === 'up' && this.initialPosY.keyPos > this.key1.key.position.y) {
-            this.animationKeyUp(this.key1);
         }
     }
 }
