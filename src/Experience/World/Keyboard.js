@@ -21,12 +21,12 @@ export default class Keyboard {
     setModel() {
         this.model = this.resources.items.keyboardModel.scene;
         this.key0 = {
-            number: this.model.children.find((child) => child.name === 'Text0'),
-            key: this.model.children.find((child) => child.name === 'Touch0'),
+            number: this.model.children.find((child) => child.name === '0'),
+            key: this.model.children.find((child) => child.name === 'key0'),
         };
         this.key1 = {
-            number: this.model.children.find((child) => child.name === 'Text1'),
-            key: this.model.children.find((child) => child.name === 'Touch1'),
+            number: this.model.children.find((child) => child.name === '1'),
+            key: this.model.children.find((child) => child.name === 'key1'),
         };
         this.planch = this.model.children.find((child) => child.name === 'Planch');
     }
@@ -45,7 +45,7 @@ export default class Keyboard {
 
         // config scale to fit in screen width
         const maxWidthWindow = window.screen.availWidth - (window.outerWidth - window.innerWidth);
-        const scale = Math.min(window.innerWidth / maxWidthWindow, 0.5);
+        const scale = 1;
 
         this.keyboard.scale.set(scale, scale, scale);
 
