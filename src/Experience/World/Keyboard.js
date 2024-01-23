@@ -20,15 +20,34 @@ export default class Keyboard {
 
     setModel() {
         this.keyboard = this.resources.items.keyboardModel.scene;
-        this.key0 = {
-            number: this.keyboard.children.find((child) => child.name === '0'),
-            key: this.keyboard.children.find((child) => child.name === 'key0'),
-        };
-        this.key1 = {
-            number: this.keyboard.children.find((child) => child.name === '1'),
-            key: this.keyboard.children.find((child) => child.name === 'key1'),
-        };
-        this.planch = this.keyboard.children.find((child) => child.name === 'Planch');
+        this.mapModel = new Map();
+        const modelStartWithKey = [];
+        const modelNotKey = [];
+
+        for (const child of this.keyboard.children) {
+            if (child.name.startsWith('key')) {
+                modelStartWithKey.push(child);
+            } else {
+                modelNotKey.push(child);
+            }
+        }
+
+        let keyModel = null;
+        let notkey = null;
+        while (modelStartWithKey.length || modelNotKey.length) {
+            notkey = modelNotKey.shift();
+
+            for (let i = 0; i < modelStartWithKey.length; i++) {
+                if (modelStartWithKey[i].name.endsWith(notkey.name)) {
+                    keyModel = modelStartWithKey.splice(i, 1);
+                }
+            }
+
+            this.mapModel.set(notkey.name, { key: keyModel, sign: notkey });
+
+            keyModel = null;
+            notkey = null;
+        }
     }
 
     setTexture() {
@@ -44,7 +63,8 @@ export default class Keyboard {
         }
 
         // config scale to fit in screen width
-        const maxWidthWindow = window.screen.availWidth - (window.outerWidth - window.innerWidth) * 2.5;
+        const maxWidthWindow =
+            window.screen.availWidth - (window.outerWidth - window.innerWidth) * 2.5;
         const scale = Math.min(window.innerWidth / maxWidthWindow, 0.5) * 2.5;
 
         this.model.scale.set(scale, scale, scale);
@@ -71,6 +91,8 @@ export default class Keyboard {
 
         window.addEventListener('keydown', (e) => {
             const keydown = e.key;
+
+            console.log(keydown);
 
             if (keydown === '0') {
                 this.triggerAnimationKeyDown(this.key0);
