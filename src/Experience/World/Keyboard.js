@@ -1,4 +1,5 @@
 import * as THREE from 'three';
+import gsap from 'gsap';
 import Experience from '../Experience';
 
 export default class Keyboard {
@@ -75,7 +76,7 @@ export default class Keyboard {
         }
 
         // config scale to fit in screen width
-        const maxWidthWindow = window.screen.availWidth - (window.outerWidth - window.innerWidth);
+        const maxWidthWindow = window.screen.availWidth;
         const scale = Math.min(window.innerWidth / maxWidthWindow, 0.5) * 2.5;
 
         this.model.scale.set(scale, scale, scale);
@@ -106,21 +107,21 @@ export default class Keyboard {
     }
 
     triggerAnimationKeyDown(keydown) {
-        const valueDown = 0.2;
+        const valueDown = 0.15;
 
-        keydown.key.position.y = keydown.initialPos.key.y - valueDown;
-        keydown.sign.position.y = keydown.initialPos.sign.y - valueDown;
+        gsap.to(keydown.key.position, { y: keydown.initialPos.key.y - valueDown, duration: 0.1 });
+        gsap.to(keydown.sign.position, { y: keydown.initialPos.sign.y - valueDown, duration: 0.1 });
     }
 
     triggerAnimationKeyUp(keyup) {
-        keyup.key.position.y = keyup.initialPos.key.y;
-        keyup.sign.position.y = keyup.initialPos.sign.y;
+        gsap.to(keyup.key.position, { y: keyup.initialPos.key.y, duration: 0.1 });
+        gsap.to(keyup.sign.position, { y: keyup.initialPos.sign.y, duration: 0.1 });
     }
 
     /* Utils Functions */
 
     resize() {
-        const maxWidthWindow = window.screen.availWidth - (window.outerWidth - window.innerWidth);
+        const maxWidthWindow = window.screen.availWidth;
         const scale = Math.min(window.innerWidth / maxWidthWindow, 0.5) * 2.5;
 
         this.model.scale.set(scale, scale, scale);
