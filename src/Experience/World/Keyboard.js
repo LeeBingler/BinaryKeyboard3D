@@ -160,8 +160,14 @@ export default class Keyboard {
         });
     }
 
-    changeColor(color) {
-        this.mapModel.get('Planch').key.color.setHex(color);
+    changeColor(color = 0xffffff, part = 'key') {
+        const toModify = this.mapModel.get(part === 'key' || part === 'sign' ? '0' : 'Planch');
+
+        if (part === 'key') {
+            toModify.key.material.color.setStyle(color);
+        } else {
+            toModify.sign.material.color.setStyle(color);
+        }
     }
 
     /* Utils Functions */
