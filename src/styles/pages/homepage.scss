@@ -36,7 +36,8 @@
     cursor: pointer;
     user-select: none;
 
-    transition: color 0.5s, background-color 0.5s;
+    $transition-animation : 0.3s;
+    transition: color $transition-animation, background-color $transition-animation;
     will-change: color, background-color;
 }
 

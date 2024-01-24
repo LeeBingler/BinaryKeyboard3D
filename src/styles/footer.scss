@@ -1,0 +1,61 @@
+@import './abstract/breakpoint';
+
+#footer {
+    height: 10vh;
+    width: 100%;
+
+    margin-top: 2vh;
+
+    .yes {
+        width: 100%;
+        display: flex;
+        flex-direction: column-reverse;
+        justify-content: center;
+        align-items: center;
+
+        margin-bottom: 2rem;
+    }
+
+    .sitemap {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+
+        width: fit-content;
+
+        row-gap: 0.5rem;
+
+    }
+
+    .logo-container {
+        width: fit-content;
+
+        .logo {
+            height: 10vh;
+            filter: invert(1);
+        }
+    }
+
+    .credit {
+        width: 100%;
+        text-align: center;
+        margin-bottom: 5px;
+    }
+}
+
+
+/* MEDIA QUERIES */
+
+@media (min-width: $breakpoint-tablet) {
+    #footer {
+        .yes {
+            flex-direction: row;
+            justify-content: space-around;
+        }
+
+        .logo {
+            height: 20vh;
+        }
+    }
+}

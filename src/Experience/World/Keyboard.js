@@ -143,7 +143,7 @@ export default class Keyboard {
             }
             // Animation when custom page
             if (currentSection === 2) {
-                gsap.to(this.model.rotation, { x: Math.PI * 0.1, y: 0, z: 0 });
+                gsap.to(this.model.rotation, { x: Math.PI * 0.2, y: 0, z: 0 });
                 gsap.to(this.model.position, { x: 0, y: -6.5 });
                 this.rotateAnimation = true;
             }
