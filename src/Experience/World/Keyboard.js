@@ -125,7 +125,7 @@ export default class Keyboard {
 
     /* Animation Change Section */
     setAnimationChangeSection() {
-        window.addEventListener('scroll', () => {
+        const animationScroll = () => {
             this.scrollY = window.scrollY;
             const newSection = Math.round(scrollY / this.experience.sizes.height);
 
@@ -152,6 +152,11 @@ export default class Keyboard {
                 gsap.to(this.model.position, { x: 0, y: 1.2 });
                 this.rotateAnimation = true;
             }
+        };
+        animationScroll();
+
+        window.addEventListener('scroll', () => {
+            animationScroll();
         });
     }
 
