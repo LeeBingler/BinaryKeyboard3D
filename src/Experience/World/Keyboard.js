@@ -88,6 +88,7 @@ export default class Keyboard {
 
         // config placement group
         this.model.rotateX(Math.PI * 0.1);
+        this.model.position.y = -1.5;
 
         this.scene.add(this.model);
     }
@@ -133,7 +134,7 @@ export default class Keyboard {
             if (newSection === 0 && this.currentSection != 0) {
                 this.currentSection = newSection;
                 gsap.to(this.model.rotation, { x: Math.PI * 0.1, y: 0, z: 0 });
-                gsap.to(this.model.position, { x: 0, y: 0 });
+                gsap.to(this.model.position, { x: 0, y: -1.5 });
 
                 this.rotateAnimation = false;
             }
@@ -141,7 +142,7 @@ export default class Keyboard {
             if (newSection === 1 && this.currentSection != 1) {
                 this.currentSection = newSection;
                 gsap.to(this.model.rotation, { x: Math.PI * 2.5, y: 0, z: Math.PI * 0.3 });
-                gsap.to(this.model.position, { x: window.innerWidth > 768 ? 2.4 : 0, y: 1 });
+                gsap.to(this.model.position, { x: window.innerWidth > 768 ? 2.4 : 0, y: -3.5 });
 
                 this.rotateAnimation = false;
             }
@@ -149,7 +150,7 @@ export default class Keyboard {
             if (newSection === 2 && this.currentSection != 2) {
                 this.currentSection = newSection;
                 gsap.to(this.model.rotation, { x: Math.PI * 0.1, y: 0, z: 0 });
-                gsap.to(this.model.position, { x: 0, y: 1.2 });
+                gsap.to(this.model.position, { x: 0, y: -6.5 });
                 this.rotateAnimation = true;
             }
         };

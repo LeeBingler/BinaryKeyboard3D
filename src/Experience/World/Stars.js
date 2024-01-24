@@ -12,14 +12,14 @@ export default class Stars {
     }
 
     setGeometry() {
-        const particlesCount = 500;
+        const particlesCount = 700;
         const positionsParticle = new Float32Array(particlesCount * 3);
 
         for (let i = 0; i < particlesCount; i++) {
             const i3 = i * 3;
 
             positionsParticle[i3] = (Math.random() - 0.5) * 10;
-            positionsParticle[i3 + 1] = (Math.random() - 0.5) * 10;
+            positionsParticle[i3 + 1] = (Math.random() - 0.5) * 20;
             positionsParticle[i3 + 2] = (Math.random() - 0.5) * 10;
         }
 

@@ -10,7 +10,10 @@ export default class Camera {
         this.canvas = this.experience.canvas;
         this.scene = this.experience.scene;
 
+        this.numberOfScene = 3;
+
         this.setInstance();
+        this.setScrollMove();
         this.setMouseMoveAnimation();
     }
 
@@ -22,7 +25,17 @@ export default class Camera {
             100
         );
         this.instance.position.set(0, 1.5, 8);
-        this.scene.add(this.instance);
+        this.group = new THREE.Group();
+
+        this.group.add(this.instance);
+        this.scene.add(this.group);
+    }
+
+    setScrollMove() {
+        this.scrollY = window.scrollY;
+        window.addEventListener('scroll', () => {
+            this.scrollY = window.scrollY;
+        });
     }
 
     setMouseMoveAnimation() {
@@ -30,7 +43,6 @@ export default class Camera {
             x: 0,
             y: 0,
         };
-        this.scrollY = window.scrollY;
 
         window.addEventListener('mousemove', (e) => {
             this.cursor.x = e.clientX / this.sizes.width - 0.5;
@@ -38,13 +50,13 @@ export default class Camera {
 
             // Animate Camera
 
-            const powerAnimation = 0.5
+            const powerAnimation = 0.5;
             const parallaxX = this.cursor.x * powerAnimation;
             const parallaxY = -this.cursor.y * powerAnimation;
 
-            gsap.to(this.instance.position, {
-                x: `+=${parallaxX - this.instance.position.x}`,
-                y: `+=${parallaxY - this.instance.position.y + 1.5}`,
+            gsap.to(this.group.position, {
+                x: `+=${parallaxX - this.group.position.x}`,
+                y: `+=${parallaxY - this.group.position.y}`,
             });
         });
     }
@@ -54,5 +66,7 @@ export default class Camera {
         this.instance.updateProjectionMatrix();
     }
 
-    update() {}
+    update() {
+        this.instance.position.y = (-this.scrollY / this.sizes.height) * this.numberOfScene;
+    }
 }
