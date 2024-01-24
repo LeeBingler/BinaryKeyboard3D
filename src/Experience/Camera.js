@@ -39,7 +39,7 @@ export default class Camera {
             // Animate Camera
 
             const powerAnimation = 0.5
-            const parallaxX = -this.cursor.x * powerAnimation;
+            const parallaxX = this.cursor.x * powerAnimation;
             const parallaxY = -this.cursor.y * powerAnimation;
 
             gsap.to(this.instance.position, {
