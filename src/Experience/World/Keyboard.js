@@ -140,7 +140,7 @@ export default class Keyboard {
             if (newSection === 1 && this.currentSection != 1) {
                 this.currentSection = newSection;
                 gsap.to(this.model.rotation, { x: Math.PI * 2.5, y: 0, z: Math.PI * 0.3 });
-                gsap.to(this.model.position, { x: 2.4, y: 1 });
+                gsap.to(this.model.position, { x: window.innerWidth > 768 ? 2.4 : 0, y: 1 });
 
                 this.rotateAnimation = false;
             }
