@@ -1,4 +1,5 @@
 @import './abstract/breakpoint';
+@import './abstract/font';
 @import './pages/pages';
 @import './header.scss';
 
@@ -6,6 +7,7 @@
     margin: 0;
     padding: 0;
     color: white;
+    font-family: 'Libre Franklin', sans-serif;
 }
 
 html {

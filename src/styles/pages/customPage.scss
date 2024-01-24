@@ -10,15 +10,17 @@
     justify-content: end;
 
     article {
-        background: white;
         padding: 1rem;
         margin-bottom: 6vh;
         border-radius: 5px;
         width: 80%;
 
         .price {
-            color: black;
-            font-size: 2rem;
+            text-align: center;
+            color: white;
+            font-size: 4rem;
+            margin-bottom: 2rem;
+            font-family: Helvetica, Arial, sans-serif;
         }
 
         .custom-color {
@@ -48,16 +50,16 @@
                 }
                 .color-input::-webkit-color-swatch {
                     border-radius: 50%;
-                    border: 1px solid black;
+                    border: 1px solid white;
                 }
                 .color-input::-moz-color-swatch {
                     border-radius: 50%;
-                    border: 1px solid black;
+                    border: 1px solid white;
                 }
 
 
                 .color-label {
-                    color: black;
+                    margin-top: 5px;
                     text-transform: capitalize;
                     cursor: pointer;
                 }
@@ -70,9 +72,8 @@
             align-items: center;
 
             .btn {
-                color: black;
                 border-radius: 5px;
-                border: solid black 2px;
+                border: solid white 2px;
                 padding: 0.5rem;
                 cursor: pointer;
             }
