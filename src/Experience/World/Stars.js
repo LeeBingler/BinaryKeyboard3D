@@ -1,5 +1,8 @@
 import Experience from '../Experience';
 import * as THREE from 'three';
+import starsVertexShader from '../Shaders/Stars/vertex.glsl';
+import starsFragmentShader from '../Shaders/Stars/fragment.glsl';
+
 
 export default class Stars {
     constructor() {
@@ -19,7 +22,7 @@ export default class Stars {
             const i3 = i * 3;
 
             positionsParticle[i3] = (Math.random() - 0.5) * 10;
-            positionsParticle[i3 + 1] = (Math.random() - 0.5) * 20;
+            positionsParticle[i3 + 1] = (Math.random() - 0.7) * 15;
             positionsParticle[i3 + 2] = (Math.random() - 0.5) * 10;
         }
 
@@ -28,10 +31,13 @@ export default class Stars {
     }
 
     setMaterial() {
-        this.material = new THREE.PointsMaterial({
-            color: 0xffffff,
-            sizeAttenuation: true,
-            size: 0.03,
+        this.material = new THREE.ShaderMaterial({
+            blending: THREE.AdditiveBlending,
+            vertexShader: starsVertexShader,
+            fragmentShader: starsFragmentShader,
+            uniforms: {
+                uSize: {value: 20 * this.experience.renderer.instance.getPixelRatio()}
+            }
         });
     }
 
