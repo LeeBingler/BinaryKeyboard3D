@@ -3,7 +3,6 @@ import * as THREE from 'three';
 import starsVertexShader from '../Shaders/Stars/vertex.glsl';
 import starsFragmentShader from '../Shaders/Stars/fragment.glsl';
 
-
 export default class Stars {
     constructor() {
         this.experience = new Experience();
@@ -35,9 +34,10 @@ export default class Stars {
             blending: THREE.AdditiveBlending,
             vertexShader: starsVertexShader,
             fragmentShader: starsFragmentShader,
+            depthWrite: false,
             uniforms: {
-                uSize: {value: 20 * this.experience.renderer.instance.getPixelRatio()}
-            }
+                uSize: { value: 50 * this.experience.renderer.instance.getPixelRatio() },
+            },
         });
     }
 
