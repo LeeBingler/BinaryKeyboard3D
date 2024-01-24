@@ -35,6 +35,14 @@
 
     cursor: pointer;
     user-select: none;
+
+    transition: color 0.5s, background-color 0.5s;
+    will-change: color, background-color;
+}
+
+.btn_buy:hover {
+    background-color: white;
+    color: black;
 }
 
 @media (min-width: $breakpoint-tablet) {
