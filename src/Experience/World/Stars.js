@@ -7,6 +7,7 @@ export default class Stars {
     constructor() {
         this.experience = new Experience();
         this.scene = this.experience.scene;
+        this.time = this.experience.time;
 
         this.setGeometry();
         this.setMaterial();
@@ -14,7 +15,7 @@ export default class Stars {
     }
 
     setGeometry() {
-        const particlesCount = 700;
+        const particlesCount = 800;
         const positionsParticle = new Float32Array(particlesCount * 3);
 
         for (let i = 0; i < particlesCount; i++) {
@@ -36,7 +37,8 @@ export default class Stars {
             fragmentShader: starsFragmentShader,
             depthWrite: false,
             uniforms: {
-                uSize: { value: 50 * this.experience.renderer.instance.getPixelRatio() },
+                uSize: { value: 20 * this.experience.renderer.instance.getPixelRatio() },
+                uTime: { value: 0 },
             },
         });
     }
@@ -44,5 +46,9 @@ export default class Stars {
     setStars() {
         this.particles = new THREE.Points(this.geometry, this.material);
         this.scene.add(this.particles);
+    }
+
+    update() {
+        this.material.uniforms.uTime.value = this.time.elapsed / 1000;
     }
 }

@@ -28,5 +28,9 @@ export default class World {
         if (this.keyboard) {
             this.keyboard.update();
         }
+
+        if (this.stars) {
+            this.stars.update();
+        }
     }
 }
