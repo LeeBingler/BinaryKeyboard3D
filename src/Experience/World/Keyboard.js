@@ -13,9 +13,6 @@ export default class Keyboard {
         this.sectionHandler = this.experience.sectionHandler;
         this.rotateAnimation = false;
 
-        this.currentSection = 0;
-        this.scrollY = window.scrollY;
-
         this.setModel();
         //this.setTexture();
         this.setMesh();

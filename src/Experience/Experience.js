@@ -26,6 +26,7 @@ export default class Experience {
 
         // Setup
         this.sizes = new Sizes();
+        this.sectionHandler = new SectionHandler(this.sizes.height);
         this.time = new Time();
         this.scene = new THREE.Scene();
         this.resources = new Resources(source);
@@ -34,7 +35,6 @@ export default class Experience {
         this.renderer = new Renderer();
         this.world = new World();
         this.colorCustomLayout = new ColorCustomLayout();
-        this.sectionHandler = new SectionHandler(this.sizes.height);
 
         // Resize event
         this.sizes.on('resize', () => {
