@@ -2,6 +2,7 @@ import Light from './Light';
 import Experience from '../Experience';
 import Keyboard from './Keyboard';
 import * as THREE from 'three';
+import Stars from './Stars';
 export default class World {
     constructor() {
         this.experience = new Experience();
@@ -16,6 +17,7 @@ export default class World {
         // wait for resources
         this.resources.on('ready', () => {
             this.keyboard = new Keyboard();
+            this.stars = new Stars();
         });
     }
 
