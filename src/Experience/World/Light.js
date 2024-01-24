@@ -5,44 +5,39 @@ export default class Light {
     constructor() {
         this.experience = new Experience();
         this.scene = this.experience.scene;
+        this.ambientLights = [];
+        this.pointlights = [];
     }
 
     setAmbientLight(color = 0xffffff, intensity = 1) {
-        this.ambientLight = new THREE.AmbientLight(color, intensity);
-        this.scene.add(this.ambientLight);
-    }
+        const ambientLight = new THREE.AmbientLight(color, intensity);
 
-    setDirectionalLight(color = 0xffffff, intensity = 1, position = { x: 0, y: 0, z: 0 }) {
-        this.directionalLight = new THREE.DirectionalLight(color, intensity);
-
-        this.directionalLight.position.x = position.x;
-        this.directionalLight.position.y = position.y;
-        this.directionalLight.position.z = position.z;
-
-        this.directionalLight.rotateX(Math.PI * 0.5)
-
-        this.directionalLight.castShadow = true;
-
-        this.scene.add(this.directionalLight);
+        this.scene.add(ambientLight);
+        this.ambientLights.push(ambientLight);
     }
 
     setPointLight(color = 0xffffff, intensity = 1, position = { x: 0, y: 0, z: 0 }) {
-        this.pointlight = new THREE.PointLight(color, intensity);
+        const pointlight = new THREE.PointLight(color, intensity);
 
-        this.pointlight.position.x = position.x;
-        this.pointlight.position.y = position.y;
-        this.pointlight.position.z = position.z;
+        pointlight.position.x = position.x;
+        pointlight.position.y = position.y;
+        pointlight.position.z = position.z;
 
-        this.pointlight.castShadow = true;
+        pointlight.castShadow = true;
 
-        this.scene.add(this.pointlight);
+        this.scene.add(pointlight);
+        this.pointlights.push(pointlight);
     }
 
     destroy() {
-        this.ambientLight.remove();
-        this.ambientLight.dispose();
+        for (const ambientLight of this.ambientLights) {
+            ambientLight.remove();
+            ambientLight.dispose();
+        }
 
-        this.pointlight.remove();
-        this.pointlight.dispose();
+        for (const pointLight of this.pointLights) {
+            pointLight.remove();
+            pointLight.dispose();
+        }
     }
 }

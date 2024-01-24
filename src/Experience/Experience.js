@@ -8,6 +8,7 @@ import source from './source';
 import World from './World/World';
 import Preloader from './Preloader';
 import ColorCustomLayout from './ColorCustomLayout';
+import SectionHandler from './Utils/SectionHandler';
 
 let instance = null;
 
@@ -33,6 +34,7 @@ export default class Experience {
         this.renderer = new Renderer();
         this.world = new World();
         this.colorCustomLayout = new ColorCustomLayout();
+        this.sectionHandler = new SectionHandler(this.sizes.height);
 
         // Resize event
         this.sizes.on('resize', () => {
@@ -49,6 +51,7 @@ export default class Experience {
         this.renderer.resize();
         this.camera.resize();
         this.world.resize();
+        this.sectionHandler.resize(this.sizes.height);
     }
 
     update() {

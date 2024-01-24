@@ -1,7 +1,6 @@
 import Light from './Light';
 import Experience from '../Experience';
 import Keyboard from './Keyboard';
-import * as THREE from 'three';
 import Stars from './Stars';
 export default class World {
     constructor() {
@@ -12,7 +11,9 @@ export default class World {
 
         // set light
         this.lights.setAmbientLight(0xffffff, 1);
-        this.lights.setPointLight(0xffffff, 15, {x: 0, y: 1, z: 0});
+        this.lights.setPointLight(0xffffff, 15, { x: 0, y: 1, z: 0 });
+        this.lights.setPointLight(0xffffff, 15, { x: -0.5, y: -3.5, z: 0 });
+        this.lights.setPointLight(0xffffff, 15, { x: 0, y: -6, z: 0 });
 
         // wait for resources
         this.resources.on('ready', () => {

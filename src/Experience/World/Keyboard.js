@@ -10,6 +10,7 @@ export default class Keyboard {
         this.resources = this.experience.resources;
         this.renderer = this.experience.renderer;
         this.time = this.experience.time;
+        this.sectionHandler = this.experience.sectionHandler;
         this.rotateAnimation = false;
 
         this.currentSection = 0;
@@ -127,28 +128,24 @@ export default class Keyboard {
     /* Animation Change Section */
     setAnimationChangeSection() {
         const animationScroll = () => {
-            this.scrollY = window.scrollY;
-            const newSection = Math.round(scrollY / this.experience.sizes.height);
+            const currentSection = this.sectionHandler.currentSection;
 
             // Animation when homepage
-            if (newSection === 0 && this.currentSection != 0) {
-                this.currentSection = newSection;
+            if (currentSection === 0) {
                 gsap.to(this.model.rotation, { x: Math.PI * 0.1, y: 0, z: 0 });
                 gsap.to(this.model.position, { x: 0, y: -1.5 });
 
                 this.rotateAnimation = false;
             }
             // Animation when description page
-            if (newSection === 1 && this.currentSection != 1) {
-                this.currentSection = newSection;
+            if (currentSection === 1) {
                 gsap.to(this.model.rotation, { x: Math.PI * 2.5, y: 0, z: Math.PI * 0.3 });
                 gsap.to(this.model.position, { x: window.innerWidth > 768 ? 2.4 : 0, y: -3.5 });
 
                 this.rotateAnimation = false;
             }
             // Animation when custom page
-            if (newSection === 2 && this.currentSection != 2) {
-                this.currentSection = newSection;
+            if (currentSection === 2) {
                 gsap.to(this.model.rotation, { x: Math.PI * 0.1, y: 0, z: 0 });
                 gsap.to(this.model.position, { x: 0, y: -6.5 });
                 this.rotateAnimation = true;
@@ -156,7 +153,7 @@ export default class Keyboard {
         };
         animationScroll();
 
-        window.addEventListener('scroll', () => {
+        this.sectionHandler.on('newSection', () => {
             animationScroll();
         });
     }
@@ -170,7 +167,7 @@ export default class Keyboard {
             toModify.sign.material.color.setStyle(color);
         }
 
-        gsap.to(this.model.rotation, { y : `+=${Math.PI * 2}` })
+        gsap.to(this.model.rotation, { y: `+=${Math.PI * 2}` });
     }
 
     /* Utils Functions */
