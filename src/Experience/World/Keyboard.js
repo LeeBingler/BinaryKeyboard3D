@@ -129,6 +129,7 @@ export default class Keyboard {
             this.scrollY = window.scrollY;
             const newSection = Math.round(scrollY / this.experience.sizes.height);
 
+            // Animation when homepage
             if (newSection === 0 && this.currentSection != 0) {
                 this.currentSection = newSection;
                 gsap.to(this.model.rotation, { x: Math.PI * 0.1, y: 0, z: 0 });
@@ -136,7 +137,7 @@ export default class Keyboard {
 
                 this.rotateAnimation = false;
             }
-
+            // Animation when description page
             if (newSection === 1 && this.currentSection != 1) {
                 this.currentSection = newSection;
                 gsap.to(this.model.rotation, { x: Math.PI * 2.5, y: 0, z: Math.PI * 0.3 });
@@ -144,7 +145,7 @@ export default class Keyboard {
 
                 this.rotateAnimation = false;
             }
-
+            // Animation when custom page
             if (newSection === 2 && this.currentSection != 2) {
                 this.currentSection = newSection;
                 gsap.to(this.model.rotation, { x: Math.PI * 0.1, y: 0, z: 0 });

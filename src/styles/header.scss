@@ -10,15 +10,19 @@
 
     backdrop-filter: blur(1px);
 
-    .logo {
-        display: block;
+    .container-logo {
         width: 100%;
 
-        line-height: 10vh;
-        text-decoration: none;
-        font-size: 5vh;
+        .logo {
+            display: block;
+            width: fit-content;
 
-        text-align: center;
+            line-height: 10vh;
+            text-decoration: none;
+            font-size: 5vh;
+
+            text-align: center;
+        }
     }
 }
 
