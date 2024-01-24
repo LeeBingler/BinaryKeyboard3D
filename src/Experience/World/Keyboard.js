@@ -168,6 +168,8 @@ export default class Keyboard {
         } else {
             toModify.sign.material.color.setStyle(color);
         }
+
+        gsap.to(this.model.rotation, { y : `+=${Math.PI * 2}` })
     }
 
     /* Utils Functions */
