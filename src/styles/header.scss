@@ -12,6 +12,8 @@
 
     .container-logo {
         width: 100%;
+        display: flex;
+        justify-content: center;
 
         .logo {
             display: block;
@@ -28,9 +30,13 @@
 
 @media (min-width: $breakpoint-tablet) {
     .header {
-        .logo {
-            text-align: left;
-            margin-left: 5vh;
+        .container-logo{
+            display: block;
+
+            .logo {
+                text-align: left;
+                margin-left: 5vh;
+            }
         }
     }
 }

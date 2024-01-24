@@ -7,6 +7,7 @@ import Time from './Utils/Time';
 import source from './source';
 import World from './World/World';
 import Preloader from './Preloader';
+import ColorCustomLayout from './ColorCustomLayout';
 
 let instance = null;
 
@@ -31,6 +32,7 @@ export default class Experience {
         this.camera = new Camera();
         this.renderer = new Renderer();
         this.world = new World();
+        this.colorCustomLayout = new ColorCustomLayout();
 
         // Resize event
         this.sizes.on('resize', () => {

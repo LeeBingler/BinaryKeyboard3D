@@ -155,6 +155,10 @@ export default class Keyboard {
         });
     }
 
+    changeColor(color) {
+        this.mapModel.get('Planch').key.color.setHex(color);
+    }
+
     /* Utils Functions */
     resize() {
         const maxWidthWindow = window.screen.availWidth;

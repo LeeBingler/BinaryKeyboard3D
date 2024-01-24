@@ -28,26 +28,37 @@
 
             margin-bottom: 4vh;
 
-            div {
+            .container-color {
                 width: 100%;
 
                 display: flex;
+                flex-direction: column;
                 justify-content: center;
+                align-items: center;
 
-                .circle {
-                    $radius: 50px;
-                    width: $radius;
-                    height: $radius;
-
-                    border-radius: 100%;
-                    background: red;
-
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                    justify-content: center;
-
+                .color-input {
+                    -webkit-appearance: none;
+                    -moz-appearance: none;
+                    appearance: none;
+                    background-color: transparent;
+                    width: 50px;
+                    height: 50px;
+                    border: none;
                     cursor: pointer;
+                }
+                .color-input::-webkit-color-swatch {
+                    border-radius: 50%;
+                    border: 1px solid black;
+                }
+                .color-input::-moz-color-swatch {
+                    border-radius: 50%;
+                    border: 1px solid black;
+                }
+
+
+                .color-label {
+                    color: black;
+                    text-transform: capitalize;
                 }
             }
         }
