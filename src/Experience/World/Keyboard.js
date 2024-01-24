@@ -4,6 +4,7 @@ import Experience from '../Experience';
 
 export default class Keyboard {
     constructor() {
+        // setup
         this.experience = new Experience();
         this.scene = this.experience.scene;
         this.resources = this.experience.resources;
@@ -11,10 +12,14 @@ export default class Keyboard {
         this.time = this.experience.time;
         this.rotateAnimation = false;
 
+        this.currentSection = 0;
+        this.scrollY = window.scrollY;
+
         this.setModel();
         //this.setTexture();
         this.setMesh();
-        this.setAnimation();
+        this.setAnimationKey();
+        this.setAnimationChangeSection();
     }
 
     /* Set Functions */
@@ -87,8 +92,8 @@ export default class Keyboard {
         this.scene.add(this.model);
     }
 
-    /* Animation Functions */
-    setAnimation() {
+    /* Animation Key Functions */
+    setAnimationKey() {
         window.addEventListener('keydown', (e) => {
             const keydown = this.mapModel.get(e.key);
 
@@ -118,8 +123,38 @@ export default class Keyboard {
         gsap.to(keyup.sign.position, { y: keyup.initialPos.sign.y, duration: 0.1 });
     }
 
-    /* Utils Functions */
+    /* Animation Change Section */
+    setAnimationChangeSection() {
+        window.addEventListener('scroll', () => {
+            this.scrollY = window.scrollY;
+            const newSection = Math.round(scrollY / this.experience.sizes.height);
 
+            if (newSection === 0 && this.currentSection != 0) {
+                this.currentSection = newSection;
+                gsap.to(this.model.rotation, { x: Math.PI * 0.1, y: 0, z: 0 });
+                gsap.to(this.model.position, { x: 0, y: 0 });
+
+                this.rotateAnimation = false;
+            }
+
+            if (newSection === 1 && this.currentSection != 1) {
+                this.currentSection = newSection;
+                gsap.to(this.model.rotation, { x: Math.PI * 2.5, y: 0, z: Math.PI * 0.3 });
+                gsap.to(this.model.position, { x: 2.4, y: 1 });
+
+                this.rotateAnimation = false;
+            }
+
+            if (newSection === 2 && this.currentSection != 2) {
+                this.currentSection = newSection;
+                gsap.to(this.model.rotation, { x: Math.PI * 0.1, y: 0, z: 0 });
+                gsap.to(this.model.position, { x: 0, y: 1.2 });
+                this.rotateAnimation = true;
+            }
+        });
+    }
+
+    /* Utils Functions */
     resize() {
         const maxWidthWindow = window.screen.availWidth;
         const scale = Math.min(window.innerWidth / maxWidthWindow, 0.5) * 2.5;
@@ -129,7 +164,7 @@ export default class Keyboard {
 
     update() {
         if (this.rotateAnimation) {
-            this.model.rotation.y = (this.time.elapsed / 1000) * 0.2;
+            this.model.rotation.y += (this.time.delta / 1000) * 0.2;
         }
     }
 }

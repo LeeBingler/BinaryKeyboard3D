@@ -11,7 +11,7 @@ export default class World {
 
         // set light
         this.lights.setAmbientLight(0xffffff, 1);
-        this.lights.setPointLight(0xffffff, 10, {x: 0, y: 2, z: 0});
+        this.lights.setPointLight(0xffffff, 10, {x: 0, y: 3, z: 0});
 
         // wait for resources
         this.resources.on('ready', () => {
