@@ -11,7 +11,7 @@ export default class Light {
         this.pointlights = [];
 
         // set light
-        this.setAmbientLight(0xffffff, 1);
+        this.setAmbientLight(0xffffff, 1.2);
         this.setPointLight(0xffffff, 15, { x: 0, y: 1, z: 0 });
 
         this.setLightAnimation(this.pointlights[0]);

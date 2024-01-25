@@ -40,9 +40,9 @@ export default class ColorCustomLayout {
             return subDiv;
         }
 
-        this.keyModifier = createSubDiv('#722BB3', 'key');
-        this.signModifier = createSubDiv('#FFFFFF', 'sign');
-        this.planchModifier = createSubDiv('#FFF12B', 'planch');
+        this.keyModifier = createSubDiv('#541B8D', 'key');
+        this.signModifier = createSubDiv('#E5E5E5', 'sign');
+        this.planchModifier = createSubDiv('#555555', 'planch');
 
         this.mainDiv.appendChild(this.keyModifier);
         this.mainDiv.appendChild(this.signModifier);

@@ -13,7 +13,7 @@ export default class SectionHandler extends EventEmitter {
     }
 
     setChangeSection() {
-        window.addEventListener('scroll', () => {
+        const triggerChange = () => {
             this.scrollY = window.scrollY;
             const newSection = Math.round(this.scrollY / this.height);
 
@@ -21,6 +21,11 @@ export default class SectionHandler extends EventEmitter {
                 this.currentSection = newSection;
                 this.trigger('newSection');
             }
+        }
+
+        triggerChange();
+        window.addEventListener('scroll', () => {
+            triggerChange();
         });
     }
 
