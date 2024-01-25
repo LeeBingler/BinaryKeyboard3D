@@ -36,7 +36,7 @@ export default class Preloader {
 
     setOverlay() {
         this.overlay = {};
-        this.overlay.geo = new THREE.PlaneGeometry(2, 2, 1, 1);
+        this.overlay.geo = new THREE.PlaneGeometry(7, 7, 1, 1);
         this.overlay.mat = new THREE.ShaderMaterial({
             vertexShader: overlayVertexShader,
             fragmentShader: overlayFragmentShader,
