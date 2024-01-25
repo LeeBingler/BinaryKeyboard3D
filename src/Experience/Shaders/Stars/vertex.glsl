@@ -1,15 +1,17 @@
 uniform float uSize;
 uniform float uTime;
+uniform float uSpeedAnimation;
 
 void main() {
-    float maxY = 1.0;
-    float minY = -1.0;
+    float maxY = 2.0;
 
     vec4 currentPosition = vec4(position, 1.0);
     vec4 modelPosition = modelMatrix * currentPosition;
 
     // Animation go up
-    modelPosition.y += abs(uTime * modelPosition.z) * 0.1;
+    float rangeParticle = 10.0;
+    modelPosition.y += abs(uTime * modelPosition.z) * uSpeedAnimation;
+    modelPosition.y = mod(modelPosition.y, maxY * rangeParticle / 1.6) - rangeParticle;
 
 
     vec4 viewPosition = viewMatrix * modelPosition;

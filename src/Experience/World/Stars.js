@@ -39,6 +39,7 @@ export default class Stars {
             uniforms: {
                 uSize: { value: 20 * this.experience.renderer.instance.getPixelRatio() },
                 uTime: { value: 0 },
+                uSpeedAnimation: { value: 0.1 }
             },
         });
     }
