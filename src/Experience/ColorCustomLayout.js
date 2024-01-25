@@ -57,14 +57,14 @@ export default class ColorCustomLayout {
     setChangecolor() {
         this.keyboard = this.world.keyboard;
 
-        this.keyModifier.oninput = (value) => {
-            this.keyboard.changeColor(value.originalTarget.value, 'key');
-        };
-        this.signModifier.oninput = (value) => {
-            this.keyboard.changeColor(value.originalTarget.value, 'sign');
-        };
-        this.planchModifier.oninput = (value) => {
-            this.keyboard.changeColor(value.originalTarget.value, 'planch');
-        };
+        this.planchModifier.addEventListener('change', (e) => {
+            this.keyboard.changeColor(e.target.value, 'planch');
+        });
+        this.keyModifier.addEventListener('change', (e) => {
+            this.keyboard.changeColor(e.target.value, 'key');
+        });
+        this.signModifier.addEventListener('change', (e) => {
+            this.keyboard.changeColor(e.target.value, 'sign');
+        });
     }
 }
