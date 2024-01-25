@@ -137,7 +137,7 @@ export default class Keyboard {
             // Animation when description page
             if (currentSection === 1) {
                 gsap.to(this.model.rotation, { x: Math.PI * 2.5, y: 0, z: Math.PI * 0.3 });
-                gsap.to(this.model.position, { x: window.innerWidth > 768 ? 2.4 : 0.2, y: -3.5 });
+                gsap.to(this.model.position, { x: window.innerWidth > 768 ? 2.4 : 0.3, y: -3.5 });
 
                 this.rotateAnimation = false;
             }
