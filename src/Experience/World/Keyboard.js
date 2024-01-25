@@ -80,7 +80,7 @@ export default class Keyboard {
 
         // config scale to fit in screen width
         const maxWidthWindow = window.screen.availWidth;
-        const scale = Math.min(window.innerWidth / maxWidthWindow, 0.5) * 2.5;
+        const scale = Math.min(window.innerWidth / maxWidthWindow, 0.5) * 2;
 
         this.model.scale.set(scale, scale, scale);
 
@@ -137,7 +137,7 @@ export default class Keyboard {
             // Animation when description page
             if (currentSection === 1) {
                 gsap.to(this.model.rotation, { x: Math.PI * 2.5, y: 0, z: Math.PI * 0.3 });
-                gsap.to(this.model.position, { x: window.innerWidth > 768 ? 2.4 : 0, y: -3.5 });
+                gsap.to(this.model.position, { x: window.innerWidth > 768 ? 2.4 : 0.2, y: -3.5 });
 
                 this.rotateAnimation = false;
             }
@@ -170,7 +170,7 @@ export default class Keyboard {
     /* Utils Functions */
     resize() {
         const maxWidthWindow = window.screen.availWidth;
-        const scale = Math.min(window.innerWidth / maxWidthWindow, 0.5) * 2.5;
+        const scale = Math.min(window.innerWidth / maxWidthWindow, 0.5) * 2;
 
         this.model.scale.set(scale, scale, scale);
     }
